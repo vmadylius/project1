@@ -3,13 +3,13 @@ import { useState } from 'react'
 function App() {
   const [sessionInfo, setSessionInfo] = useState('Select a trading session to see details.')
 
-  const displaySession = (session) => {
+const displaySession = (session) => {
     if (session === 'London') {
-      setSessionInfo('🇬🇧 London Session: High liquidity and volatility. Major moves on EURUSD and Gold (XAUUSD).')
+      setSessionInfo('🇬🇧 London Session: High liquidity. Focuses on the initial London Killzone. Major moves and expansion of the daily Dealing Range on EURUSD and Gold (XAUUSD).')
     } else if (session === 'New York') {
-      setSessionInfo('🇺🇸 New York Session: Maximum volume. News releases create heavy impulses and high volatility.')
+      setSessionInfo('🇺🇸 New York Session: Maximum volume and heavy volatility expansion. High-impact news releases heavily influence the NY Killzone and define the final daily range.')
     } else if (session === 'Tokyo') {
-      setSessionInfo('🇯🇵 Tokyo (Asian) Session: Lower volatility, stable ranges. Ideal for yen pairs and consolidation.')
+      setSessionInfo('🇯🇵 Tokyo (Asian) Session: Lower volatility and stable consolidation. Forms the initial Asian Dealing Range, which acts as a benchmark for London stop hunts.')
     }
   }
 
