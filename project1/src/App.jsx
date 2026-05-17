@@ -52,7 +52,7 @@ function App() {
 
   return (
     <div style={containerStyle}>
-      <h1>Варіант від Першої Гілки</h1>
+      <h1>Trading Sessions Dashboard</h1>
       <p>Click a button to analyze session characteristics:</p>
       
       <div>
