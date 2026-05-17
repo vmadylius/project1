@@ -52,7 +52,7 @@ function App() {
 
   return (
     <div style={containerStyle}>
-      <h1>Старий Заголовок</h1>
+      <h1>Варіант від Другої Гілки</h1>
       <p>Click a button to analyze session characteristics:</p>
       
       <div>
