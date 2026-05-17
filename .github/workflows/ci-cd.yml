@@ -29,12 +29,18 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      # ================= ЗМІНА 3 =================
       # Крок 3: Чисте встановлення залежностей
       - name: Install dependencies
         run: npm install
 
-      # ================= ЗМІНА 4 =================
       # Крок 4: Статичний аналіз коду лінтером
       - name: Run linter
         run: npm run lint
+
+      # Крок 5: Запуск модульних тестів торгової панелі
+      - name: Run unit tests
+        run: npm run test:unit
+
+      # Крок 6: Тестова збірка під Production у хмарі
+      - name: Build for production
+        run: npm run build
