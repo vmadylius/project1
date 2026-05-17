@@ -10,16 +10,15 @@ describe('Trading Sessions Dashboard Unit Tests', () => {
   
   test('1. Перевірка початкового стану: відображення дефолтного повідомлення', () => {
     render(<App />)
-    expect(screen.getByText(/Select a trading session/i)).toBeInTheDocument()
+    // ================= ЗМІНА 7 (ЛАМАЮЧА) =================
+    // Замість реального тексту сесії очікуємо завідомо неправильний рядок
+    expect(screen.getByText(/НЕІСНУЮЧА СЕСІЯ ДЛЯ ЗБОЮ/i)).toBeInTheDocument()
   })
 
   test('2. Перевірка наявності та кліку на кнопку London', () => {
     render(<App />)
     const londonButton = screen.getAllByRole('button', { name: /London/i })[0]
     fireEvent.click(londonButton)
-    
-    // ЖОРСТКА ПЕРЕВІРКА: очікуємо опис лондонської сесії з твого App.jsx
-    // Без onClick цей текст не з'явиться, і тест ГАРАНТОВАНО впаде червоним!
     expect(screen.getByText(/High liquidity|Killzone/i)).toBeInTheDocument()
   })
 
@@ -27,6 +26,11 @@ describe('Trading Sessions Dashboard Unit Tests', () => {
     render(<App />)
     const nyButton = screen.getAllByRole('button', { name: /New York/i })[0]
     fireEvent.click(nyButton)
+    
+    // ================= ЗМІНА 8 (ЛАМАЮЧА) =================
+    // Додаємо математично неможливе твердження, яке гарантовано звалить тест
+    expect(1).toBe(2)
+    
     expect(screen.getByText(/Maximum volume|volatility/i)).toBeInTheDocument()
   })
 
