@@ -2,12 +2,10 @@ name: CI/CD Pipeline
 
 # Тригери для автоматичного запуску пайплайну
 on:
-  # Запуск при push у гілки main та develop
   push:
     branches:
       - main
       - develop
-  # Запуск при створенні Pull Request
   pull_request:
     branches:
       - main
@@ -27,3 +25,16 @@ jobs:
       # Крок 2: Налаштування Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # ================= ЗМІНА 3 =================
+      # Крок 3: Чисте встановлення залежностей
+      - name: Install dependencies
+        run: npm install
+
+      # ================= ЗМІНА 4 =================
+      # Крок 4: Статичний аналіз коду лінтером
+      - name: Run linter
+        run: npm run lint
