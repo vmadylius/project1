@@ -1,6 +1,17 @@
 import { useState } from 'react'
 
 function App() {
+  const badgeStyle = {
+  display: 'inline-block',
+  padding: '5px 12px',
+  borderRadius: '15px',
+  fontSize: '14px',
+  fontWeight: 'bold',
+  backgroundColor: import.meta.env.VITE_APP_STATUS === 'Development' ? '#ff9900' : '#00ff88',
+  color: '#000000',
+  marginTop: '5px',
+  marginBottom: '15px'
+  }
   const [sessionInfo, setSessionInfo] = useState('Select a trading session to see details.')
 
 const displaySession = (session) => {
@@ -53,6 +64,7 @@ const displaySession = (session) => {
   return (
     <div style={containerStyle}>
       <h1>Trading Sessions Dashboard</h1>
+      <div style={badgeStyle}>{import.meta.env.VITE_APP_STATUS}</div>
       <p>Click a button to analyze session characteristics:</p>
       
       <div>
