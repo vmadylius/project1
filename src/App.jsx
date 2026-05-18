@@ -1,8 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 // Імпортуємо підключений інструмент аналітики PostHog
 import posthog from 'posthog-js'
 
 function App() {
+  const [sessionInfo, setSessionInfo] = useState('Select a trading session to see details.')
+  // Стан для динамічного відображення банера
+  const [displayWarning, setDisplayWarning] = useState(false)
+
+  // Перевіряємо статус прапорця функцій після завантаження компонента
+  useEffect(() => {
+    posthog.onFeatureFlags(() => {
+      if (posthog.isFeatureEnabled('show-risk-warning')) {
+        setDisplayWarning(true)
+      } else {
+        setDisplayWarning(false)
+      }
+    })
+  }, [])
+
   const badgeStyle = {
     display: 'inline-block',
     padding: '5px 12px',
@@ -15,8 +30,6 @@ function App() {
     marginBottom: '15px'
   }
   
-  const [sessionInfo, setSessionInfo] = useState('Select a trading session to see details.')
-
   const displaySession = (session) => {
     if (session === 'London') {
       setSessionInfo('🇬🇧 London Session: High liquidity. Focuses on the initial London Killzone. Major moves and expansion of the daily Dealing Range on EURUSD and Gold (XAUUSD).')
@@ -27,7 +40,6 @@ function App() {
     }
 
     // ================= КРОК 2: Кастомна подія аналітики =================
-    // Фіксуємо вибір сесії розробником із бізнес-властивостями для графіків
     posthog.capture('session_selected', {
       session_name: session,
       trading_asset: session === 'Tokyo' ? 'EURUSD' : 'XAUUSD',
@@ -72,10 +84,32 @@ function App() {
     lineHeight: '1.5'
   }
 
+  // Стиль для банера попередження про ризики (вписується в твою темну тему)
+  const warningBannerStyle = {
+    backgroundColor: '#3b0f0f',
+    border: '1px solid #ff4444',
+    color: '#ff9999',
+    padding: '12px 15px',
+    borderRadius: '6px',
+    marginBottom: '25px',
+    fontSize: '14px',
+    maxWidth: '500px',
+    lineHeight: '1.4',
+    textAlign: 'left'
+  }
+
   return (
     <div style={containerStyle}>
       <h1>Trading Sessions Dashboard</h1>
       <div style={badgeStyle}>{import.meta.env.VITE_APP_STATUS}</div>
+      
+      {/* Банер рендериться ТІЛЬКИ якщо Feature Flag увімкнено в PostHog */}
+      {displayWarning && (
+        <div style={warningBannerStyle}>
+          ⚠️ <strong>Risk Warning:</strong> Trading financial instruments involves high risk. Ensure proper risk management protocols are active before trading these session ranges.
+        </div>
+      )}
+
       <p>Click a button to analyze session characteristics:</p>
       
       <div>
