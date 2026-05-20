@@ -1,12 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/ingest/static/:path*",
-      "destination": "https://eu.posthog.com/static/:path*"
+      "source": "/pb-analytics/static/:path*",
+      "destination": "https://eu.i.posthog.com/static/:path*"
     },
     {
-      "source": "/ingest/:path*",
-      "destination": "https://eu.posthog.com/:path*"
+      "source": "/pb-analytics/:path*",
+      "destination": "https://eu.i.posthog.com/:path*"
     }
   ]
 }

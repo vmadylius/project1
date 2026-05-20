@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5175, // Твій робочий порт Mac
     proxy: {
       // Перехоплюємо локальні запити до /ingest
-      '/ingest': {
+      '/pb-analytics': {
         target: 'https://eu.i.posthog.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/ingest/, ''),
@@ -15,3 +15,4 @@ export default defineConfig({
     },
   },
 })
+
