@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/ingest/:match*",
-      "destination": "https://eu.posthog.com/:match*"
+      "source": "/ingest/:path*",
+      "destination": "https://eu.posthog.com/:path*"
     }
   ]
 }

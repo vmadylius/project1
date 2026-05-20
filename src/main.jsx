@@ -5,9 +5,8 @@ import posthog from 'posthog-js'
 import * as Sentry from "@sentry/react" // Імпортуємо Sentry під React
 
 // ================= ІНІЦІАЛІЗАЦІЯ SENTRY (ЛАБА №6) =================
-// Тепер змінна Sentry використовується, і лінтер буде задоволений!
 Sentry.init({
-  dsn: "https://o4511409923620864.ingest.de.sentry.io/api/4511409929388112/integration/otlp", // Тимчасовий або твій реальний DSN
+  dsn: "https://4af5e3ab0a9d0d89782188632d07fdb4@o4511409923620864.ingest.de.sentry.io/4511409929388112", // Твій реальний виправлений DSN
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration(),
@@ -18,7 +17,7 @@ Sentry.init({
 
 // ================= ІНІЦІАЛІЗАЦІЯ POSTHOG (ЛАБА №5) =================
 posthog.init('phc_kZGdUhatELsSuYfZNAWJL8KVSFLKJsNWzkPY7ojitrAT', {
-  api_host: '/ingest',
+  api_host: window.location.origin + '/ingest',
   person_profiles: 'identified_only',
 })
 
