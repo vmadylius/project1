@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import posthog from 'posthog-js'
 import * as Sentry from "@sentry/react" // Імпортуємо Sentry під React
-
+const triggerRedGateError = "Sabotage"
 // ================= ІНІЦІАЛІЗАЦІЯ SENTRY (ЛАБА №6) =================
 // Тепер змінна Sentry використовується, і лінтер буде задоволений!
 Sentry.init({
