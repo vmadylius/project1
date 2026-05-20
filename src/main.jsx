@@ -17,7 +17,7 @@ Sentry.init({
 
 // ================= ІНІЦІАЛІЗАЦІЯ POSTHOG (ЛАБА №5) =================
 posthog.init('phc_kZGdUhatELsSuYfZNAWJL8KVSFLKJsNWzkPY7ojitrAT', {
-  api_host: window.location.origin + '/ingest',
+  api_host: '/ingest', // Просто чистий відносний шлях без window.location
   person_profiles: 'identified_only',
 })
 
