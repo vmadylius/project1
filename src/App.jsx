@@ -103,7 +103,7 @@ function App() {
       <h1>Trading Sessions Dashboard</h1>
       <div style={badgeStyle}>{import.meta.env.VITE_APP_STATUS}</div>
       
-      {/* Банер рендериться ТІЛЬКИ якщо Feature Flag увімкнено в PostHog */}
+      {/* Банер рендериться ТІЛЬКИ якщо Feature Flag увімкнено в PostHog1 */}
       {displayWarning && (
         <div style={warningBannerStyle}>
           ⚠️ <strong>Risk Warning:</strong> Trading financial instruments involves high risk. Ensure proper risk management protocols are active before trading these session ranges.

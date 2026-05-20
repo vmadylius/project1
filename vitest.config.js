@@ -6,7 +6,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
-    // Наказуємо Vitest шукати тести ВИКЛЮЧНО всередині папки src
+    // Шукаємо тести виключно всередині папки src
     include: ['src/**/*.{test,spec}.{js,jsx,ts,tsx}']
   }
 })

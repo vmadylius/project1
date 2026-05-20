@@ -1,19 +1,29 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-// Імпортуємо аналітику PostHog [cite: 144]
 import posthog from 'posthog-js'
+import * as Sentry from "@sentry/react" // Імпортуємо Sentry під React
 
-// Активуємо трекінг перед рендером інтерфейсу [cite: 145]
-posthog.init('phc_kZGdUhatELsSuYfZNAWJL8KVSFLKJsNWzkPY7ojitrAT', {
-  api_host: 'https://eu.posthog.com', // [cite: 146]
-  person_profiles: 'identified_only', // [cite: 147]
+// ================= ІНІЦІАЛІЗАЦІЯ SENTRY (ЛАБА №6) =================
+// Тепер змінна Sentry використовується, і лінтер буде задоволений!
+Sentry.init({
+  dsn: "https://o4511409923620864.ingest.de.sentry.io/api/4511409929388112/integration/otlp", // Тимчасовий або твій реальний DSN
+  integrations: [
+    Sentry.browserTracingIntegration(),
+    Sentry.replayIntegration(),
+  ],
+  tracesSampleRate: 1.0,
+  environment: "development",
 })
 
-// Єдиний правильний рендер застосунку
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+// ================= ІНІЦІАЛІЗАЦІЯ POSTHOG (ЛАБА №5) =================
+posthog.init('phc_kZGdUhatELsSuYfZNAWJL8KVSFLKJsNWzkPY7ojitrAT', {
+  api_host: '/ingest',
+  person_profiles: 'identified_only',
+})
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>,
+  </React.StrictMode>,
 )
