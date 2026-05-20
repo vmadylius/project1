@@ -1,19 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-// Імпортуємо аналітику PostHog [cite: 144]
 import posthog from 'posthog-js'
+import * as Sentry from "@sentry/react" // Імпортуємо Sentry під React
 
-// Активуємо трекінг перед рендером інтерфейсу [cite: 145]
+
+
 posthog.init('phc_kZGdUhatELsSuYfZNAWJL8KVSFLKJsNWzkPY7ojitrAT', {
-  api_host: 'https://eu.posthog.com', // [cite: 146]
-  person_profiles: 'identified_only', // [cite: 147]
+  api_host: '/ingest', 
+  person_profiles: 'identified_only',
 })
 
-// Єдиний правильний рендер застосунку
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>,
+  </React.StrictMode>,
 )
