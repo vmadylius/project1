@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       // Перехоплюємо локальні запити до /ingest
       '/ingest': {
-        target: 'https://eu.posthog.com',
+        target: 'https://eu.i.posthog.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/ingest/, ''),
       },
