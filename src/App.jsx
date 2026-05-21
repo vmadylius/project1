@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react'
-// Імпортуємо підключений інструмент аналітики PostHog
 import posthog from 'posthog-js'
+import * as Sentry from '@sentry/react'
 
 function App() {
   const [sessionInfo, setSessionInfo] = useState('Select a trading session to see details.')
-  // Стан для динамічного відображення банера
   const [displayWarning, setDisplayWarning] = useState(false)
 
-  // Перевіряємо статус прапорця функцій після завантаження компонента
   useEffect(() => {
+    // ================= КРОК 3: Контекст користувача в Sentry =================
+    Sentry.setUser({
+      id: '12345',
+      email: 'student@example.com',
+      segment: 'premium_user'
+    })
+
     posthog.onFeatureFlags(() => {
       if (posthog.isFeatureEnabled('show-risk-warning')) {
         setDisplayWarning(true)
@@ -17,6 +22,16 @@ function App() {
       }
     })
   }, [])
+
+  // ================= КРОК 2: Симуляція помилки для Sentry =================
+  const throwError = () => {
+    Sentry.addBreadcrumb({
+      message: 'Break the world button clicked',
+      category: 'user',
+      level: 'info',
+    })
+    throw new Error('Sentry Test Error: Something went wrong!')
+  }
 
   const badgeStyle = {
     display: 'inline-block',
@@ -29,7 +44,7 @@ function App() {
     marginTop: '5px',
     marginBottom: '15px'
   }
-  
+
   const displaySession = (session) => {
     if (session === 'London') {
       setSessionInfo('🇬🇧 London Session: High liquidity. Focuses on the initial London Killzone. Major moves and expansion of the daily Dealing Range on EURUSD and Gold (XAUUSD).')
@@ -39,7 +54,6 @@ function App() {
       setSessionInfo('🇯🇵 Tokyo (Asian) Session: Lower volatility and stable consolidation. Forms the initial Asian Dealing Range, which acts as a benchmark for London stop hunts.')
     }
 
-    // ================= КРОК 2: Кастомна подія аналітики =================
     posthog.capture('session_selected', {
       session_name: session,
       trading_asset: session === 'Tokyo' ? 'EURUSD' : 'XAUUSD',
@@ -47,7 +61,6 @@ function App() {
     })
   }
 
-  // Стилі для гарного темного інтерфейсу (без змін)
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -73,6 +86,18 @@ function App() {
     transition: '0.3s'
   }
 
+  const errorButtonStyle = {
+    padding: '10px 20px',
+    margin: '10px',
+    fontSize: '16px',
+    cursor: 'pointer',
+    backgroundColor: '#1f1f1f',
+    color: '#ff4444',
+    border: '2px solid #ff4444',
+    borderRadius: '5px',
+    transition: '0.3s'
+  }
+
   const boxStyle = {
     marginTop: '30px',
     padding: '20px',
@@ -84,7 +109,6 @@ function App() {
     lineHeight: '1.5'
   }
 
-  // Стиль для банера попередження про ризики (вписується в твою темну тему)
   const warningBannerStyle = {
     backgroundColor: '#3b0f0f',
     border: '1px solid #ff4444',
@@ -102,8 +126,7 @@ function App() {
     <div style={containerStyle}>
       <h1>Trading Sessions Dashboard</h1>
       <div style={badgeStyle}>{import.meta.env.VITE_APP_STATUS}</div>
-      
-      {/* Банер рендериться ТІЛЬКИ якщо Feature Flag увімкнено в PostHog1 */}
+
       {displayWarning && (
         <div style={warningBannerStyle}>
           ⚠️ <strong>Risk Warning:</strong> Trading financial instruments involves high risk. Ensure proper risk management protocols are active before trading these session ranges.
@@ -111,7 +134,7 @@ function App() {
       )}
 
       <p>Click a button to analyze session characteristics:</p>
-      
+
       <div>
         <button style={buttonStyle} onClick={() => displaySession('London')}>London</button>
         <button style={buttonStyle} onClick={() => displaySession('New York')}>New York</button>
@@ -120,6 +143,14 @@ function App() {
 
       <div style={boxStyle}>
         <p>{sessionInfo}</p>
+      </div>
+
+      {/* ================= КРОК 2: Кнопка генерації помилки ================= */}
+      <div style={{ marginTop: '40px', borderTop: '1px solid #333', paddingTop: '20px' }}>
+        <p style={{ fontSize: '12px', color: '#666' }}>Testing & Monitoring</p>
+        <button style={errorButtonStyle} onClick={throwError}>
+          💥 Break the world
+        </button>
       </div>
     </div>
   )
