@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/pb-analytics/:path*",
-      "destination": "/api/posthog/:path*"
+      "source": "/pb-analytics/(.*)",
+      "destination": "/api/posthog"
     }
   ]
 }
