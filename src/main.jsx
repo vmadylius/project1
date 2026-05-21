@@ -2,11 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import posthog from 'posthog-js'
-import * as Sentry from "@sentry/react" // Імпортуємо Sentry під React
+import * as Sentry from "@sentry/react"
 
-// ================= ІНІЦІАЛІЗАЦІЯ SENTRY (ЛАБА №6) =================
 Sentry.init({
-  dsn: "https://4af5e3ab0a9d0d89782188632d07fdb4@o4511409923620864.ingest.de.sentry.io/4511409929388112", // Твій реальний виправлений DSN
+  dsn: "https://4af5e3ab0a9d0d89782188632d07fdb4@o4511409923620864.ingest.de.sentry.io/4511409929388112",
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration(),
@@ -15,9 +14,8 @@ Sentry.init({
   environment: "development",
 })
 
-// ================= ІНІЦІАЛІЗАЦІЯ POSTHOG (ЛАБА №5) =================
 posthog.init('phc_kZGdUhatELsSuYfZNAWJL8KVSFLKJsNWzkPY7ojitrAT', {
-  api_host: '/pb-analytics', // Новий шлях проксі
+  api_host: 'https://eu.i.posthog.com',
   person_profiles: 'identified_only',
 })
 
