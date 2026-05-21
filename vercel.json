@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/pb-analytics/:path*",
-      "destination": "/api/pb-analytics/:path*"
+      "destination": "/api/:path*"
     }
   ]
 }

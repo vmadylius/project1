@@ -1,7 +1,5 @@
 export default async function handler(req, res) {
-  // Витягуємо шлях після /api/pb-analytics
-  const path = req.url.replace('/api/pb-analytics', '') || '/'
-
+  const path = req.url.replace('/api', '') || '/'
   const url = `https://eu.i.posthog.com${path}`
 
   const response = await fetch(url, {
@@ -16,7 +14,7 @@ export default async function handler(req, res) {
       : undefined,
   })
 
+  const contentType = response.headers.get('content-type') || 'application/json'
   const data = await response.text()
-
-  res.status(response.status).send(data)
+  res.status(response.status).setHeader('content-type', contentType).send(data)
 }
